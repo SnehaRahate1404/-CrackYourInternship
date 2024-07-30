@@ -1,0 +1,45 @@
+class Solution {
+    public void helper(int array[] , int si , int ei){
+        if(si >= ei){
+            return;
+        }
+        int mid = si + (ei-si)/2;
+        helper(array , si , mid);
+        helper(array, mid+1 , ei);
+        mergesort(array , si , mid , ei);
+    }
+    public void mergesort(int array[] , int si , int mid , int ei){
+         int temp [] = new int[ei-si+1];
+         int i = si;
+         int j = mid+1;
+         int k =0;
+         while(i <= mid && j <= ei){
+            if(array[i] < array[j]){
+                temp[k] = array[i];
+                i++;
+            }else{
+                temp[k] = array[j];
+                j++;
+            }
+            k++;
+         }
+
+         while(i <= mid){
+            temp[k++] = array[i++];
+         }
+
+         while(j <= ei){
+            temp[k++] = array[j++];
+         }
+
+        for(k = 0, i=si;k<temp.length;k++,i++){
+           array[i] = temp[k];
+       }
+    }
+    public void merge(int[] nums1, int m, int[] nums2, int n) {
+        for(int i = m , j =0; i < m+n ;i++ , j++){
+            nums1[i] = nums2[j];
+        }
+        helper(nums1 , 0 , m+n-1);
+    }
+}
